@@ -11,12 +11,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-def djb2(key):
-  hash = 5381
-  for c in key:
-    hash = (hash * 33) + ord(c)
-  return hash
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -24,7 +18,7 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
+    def __init__(self, capacity=MIN_CAPACITY):
         self.capacity = capacity
         self.data = [None] * capacity
 
@@ -116,7 +110,6 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
 
 
 if __name__ == "__main__":
