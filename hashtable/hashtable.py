@@ -9,7 +9,6 @@ class HashTableEntry:
 
 
 # Hash table can't have fewer than this many slots
-MIN_CAPACITY = 8
 
 class HashTable:
     """
@@ -18,9 +17,10 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity=MIN_CAPACITY):
+    def __init__(self, capacity=8):
         self.capacity = capacity
         self.data = [None] * capacity
+        self.size = 0
 
     def get_num_slots(self):
         """
@@ -102,14 +102,26 @@ class HashTable:
         value = self.data[index]
         return value
 
-
-    def resize(self, new_capacity):
+    def resize(self):
         """
         Changes the capacity of the hash table and
         rehashes all key/value pairs.
         Implement this.
         """
-        # Your code here
+        if self.size / self.capacity <= 0.7:
+            return
+        actual_size = self.size
+        self.capacity *= 2
+        old_storage = self.data.copy()
+        self.data = [None] * self.capacity
+        for node in old_storage:
+            if node is None:
+                continue
+            while node.next is not None:
+                self.put(node.key, node.value)
+                node = node.next
+            self.put(node.key, node.value)
+            self.size = actual_size
 
 
 if __name__ == "__main__":
@@ -128,21 +140,18 @@ if __name__ == "__main__":
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
 
-    print("")
-
     # Test storing beyond capacity
     for i in range(1, 13):
         print(ht.get(f"line_{i}"))
 
     # Test resizing
     old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
+    ht.resize()
     new_capacity = ht.get_num_slots()
+
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
     for i in range(1, 13):
         print(ht.get(f"line_{i}"))
-
-    print("")
