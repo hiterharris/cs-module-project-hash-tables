@@ -1,7 +1,17 @@
 def no_dups(s):
-    # Your code here
+    words = s.split(" ")
 
+    words_already_seen = dict()
+    words_with_duplicates_removed = []
 
+    for word in words:
+
+        if word not in words_already_seen:
+
+            words_already_seen[word] = 1
+            words_with_duplicates_removed.append(word)
+    
+    return " ".join(words_with_duplicates_removed)
 
 if __name__ == "__main__":
     print(no_dups(""))
