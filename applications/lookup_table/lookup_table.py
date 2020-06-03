@@ -18,7 +18,8 @@ def slowfun(x, y):
     """
     v = math.pow(x, y)
     v = math.factorial(v)
-    v //= (x + y)
+    if x and y not in cache: # if n is not a key in cache
+        cache[x, y] = x + y
     v %= 982451653
 
     return v
