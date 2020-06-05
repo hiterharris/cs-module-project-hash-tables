@@ -1,6 +1,17 @@
 def word_count(s):
-    # Your code here
+    table = str.maketrans(dict.fromkeys('":;,.-+=/\\|[]{}()*^&'))
 
+    strings = s.translate(table).split()
+
+    count = {}
+
+    for w in [word.lower() for word in strings]:
+        if w not in count:
+            count[w] = 0
+        
+        count[w] += 1
+    
+    return count
 
 
 if __name__ == "__main__":
